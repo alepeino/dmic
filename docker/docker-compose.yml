@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  db:
+    build:
+      context: db
+      args:
+        DATOMIC_ACCOUNT: ${DATOMIC_ACCOUNT}
+        DOWNLOAD_KEY: ${DOWNLOAD_KEY}
+    env_file: ../.env
+    network_mode: "host"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      ACCESS_KEY: ${ACCESS_KEY}
+      SECRET: ${SECRET}
