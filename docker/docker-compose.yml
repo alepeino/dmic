@@ -1,12 +1,18 @@
 version: '3.4'
 
 services:
-  db:
+  base:
     build:
-      context: db
+      context: base
       args:
         DATOMIC_ACCOUNT: ${DATOMIC_ACCOUNT}
         DOWNLOAD_KEY: ${DOWNLOAD_KEY}
+    env_file: ../.env
+    image: "datomic-base"
+
+  db:
+    build:
+      context: db
     env_file: ../.env
     network_mode: "host"
     environment:
