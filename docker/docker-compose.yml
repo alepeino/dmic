@@ -3,21 +3,34 @@ version: '3.4'
 services:
   base:
     build:
-      context: base
+      context: datomic/base
       args:
         DATOMIC_ACCOUNT: ${DATOMIC_ACCOUNT}
         DOWNLOAD_KEY: ${DOWNLOAD_KEY}
     env_file: ../.env
     image: "datomic-base"
 
-  db:
+  transactor:
     build:
-      context: db
+      context: datomic/transactor
     env_file: ../.env
     network_mode: "host"
     environment:
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
+      LICENSE_KEY: ${LICENSE_KEY}
+
+  peer-server:
+    build:
+      context: datomic/peer-server
+    env_file: ../.env
+    network_mode: "host"
+    depends_on:
+      - transactor
+    environment:
+      PEER_SERVER_HOST: ${PEER_SERVER_HOST}
+      PEER_SERVER_PORT: ${PEER_SERVER_PORT}
+      TRANSACTOR_PROTOCOL: ${TRANSACTOR_PROTOCOL}
+      TRANSACTOR_HOST: ${TRANSACTOR_HOST}
+      TRANSACTOR_PORT: ${TRANSACTOR_PORT}
       DB_NAME: ${DB_NAME}
       ACCESS_KEY: ${ACCESS_KEY}
       SECRET: ${SECRET}

@@ -14,3 +14,5 @@ RUN unzip /tmp/datomic.zip \
   && mv /datomic-pro-${DATOMIC_VERSION} /datomic
 
 WORKDIR /datomic
+
+COPY config config
