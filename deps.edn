@@ -1,3 +1,14 @@
 {:deps {com.datomic/client-pro {:mvn/version "0.8.28"}
-        lynxeyes/dotenv {:mvn/version "1.0.2"}}
- :paths ["src"]}
+        compojure {:mvn/version "1.6.1"}
+        lynxeyes/dotenv {:mvn/version "1.0.2"}
+        ring/ring-core {:mvn/version "1.7.1"}
+        ring/ring-jetty-adapter {:mvn/version "1.7.1"}}
+
+ :paths ["src"]
+
+ :aliases
+ {:dev {:extra-paths ["dev"]
+
+        :extra-deps {ring/ring-devel {:mvn/version "1.7.1"}}
+
+        :main-opts ["-m" "dmic.dev"]}}}
