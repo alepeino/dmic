@@ -1,8 +1,8 @@
 {:deps {com.datomic/client-pro {:mvn/version "0.8.28"}
         compojure {:mvn/version "1.6.1"}
+        http-kit {:mvn/version "2.3.0"}
         lynxeyes/dotenv {:mvn/version "1.0.2"}
-        ring/ring-core {:mvn/version "1.7.1"}
-        ring/ring-jetty-adapter {:mvn/version "1.7.1"}}
+        ring/ring-core {:mvn/version "1.7.1"}}
 
  :paths ["src"]
 
