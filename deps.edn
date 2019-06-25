@@ -1,4 +1,3 @@
-{:deps  {com.datomic/client-pro {:mvn/version "0.8.28"}
-         lynxeyes/dotenv        {:mvn/version "1.0.2"}}
-
+{:deps {com.datomic/client-pro {:mvn/version "0.8.28"}
+        lynxeyes/dotenv {:mvn/version "1.0.2"}}
  :paths ["src"]}
