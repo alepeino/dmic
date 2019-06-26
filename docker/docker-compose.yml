@@ -34,3 +34,16 @@ services:
       DB_NAME: ${DB_NAME}
       ACCESS_KEY: ${ACCESS_KEY}
       SECRET: ${SECRET}
+
+  console:
+    build:
+      context: datomic/console
+    env_file: ../.env
+    network_mode: "host"
+    depends_on:
+      - transactor
+    environment:
+      CONSOLE_PORT: ${CONSOLE_PORT}
+      TRANSACTOR_PROTOCOL: ${TRANSACTOR_PROTOCOL}
+      TRANSACTOR_HOST: ${TRANSACTOR_HOST}
+      TRANSACTOR_PORT: ${TRANSACTOR_PORT}
