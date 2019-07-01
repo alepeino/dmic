@@ -9,5 +9,5 @@ ENV TRANSACTOR_PROTOCOL dev
 
 EXPOSE ${PEER_SERVER_PORT}
 
-CMD echo "(require '[datomic.api :as d]) (d/create-database \"datomic:${TRANSACTOR_PROTOCOL}://${TRANSACTOR_HOST}:${TRANSACTOR_PORT}/${DB_NAME}\")" | bin/repl > /dev/null \
+CMD echo "(require '[datomic.api :as d]) (d/create-database \"datomic:${TRANSACTOR_PROTOCOL}://${TRANSACTOR_HOST}:${TRANSACTOR_PORT}/${DB_NAME}\")" | bin/repl \
     && bin/run -m datomic.peer-server -h ${PEER_SERVER_HOST} -p ${PEER_SERVER_PORT} -a ${ACCESS_KEY},${SECRET} -d ${DB_NAME},datomic:${TRANSACTOR_PROTOCOL}://${TRANSACTOR_HOST}:${TRANSACTOR_PORT}/${DB_NAME}
