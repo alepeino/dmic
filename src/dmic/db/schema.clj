@@ -1,10 +1,18 @@
 (ns dmic.db.schema
-  (:require [datofu.schema.dsl :as s]))
+  (:require
+    [clojure.edn :as edn]
+    [clojure.java.io :as io]
+    [com.walmartlabs.lacinia.schema :as schema]
+    [com.walmartlabs.lacinia.util :as util]
+    [dmic.db.query :as q]))
 
-(def node-schema
-  [(s/attr :node/name :string "Node name")
-   (s/attr :node/type :keyword "Node type")
-   (s/attr :node/id :string "Custom ID for a node")
-   (s/to-one :node/parent "Node parent")
-   (s/to-many :node/ancestors :component "Node ancestors")
-   (s/to-many :node/owners "Node ancestors")])
+(defn node-by-id [db]
+  (fn [_ {id :id} _]
+    (q/find-node-by-id id)))
+
+(defn graphql-schema [db]
+  (-> (io/file "src/dmic/db/graphql-schema.edn")
+    slurp
+    edn/read-string
+    (util/attach-resolvers {:query/node-by-id (node-by-id db)})
+    schema/compile))

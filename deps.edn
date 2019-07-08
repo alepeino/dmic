@@ -1,16 +1,18 @@
-{:deps {com.datomic/client-pro {:mvn/version "0.8.28"}
+{:deps {cheshire {:mvn/version "5.8.1"}
+        com.datomic/client-pro {:mvn/version "0.8.28"}
+        com.walmartlabs/lacinia {:mvn/version "0.33.0"}
         compojure {:mvn/version "1.6.1"}
         http-kit {:mvn/version "2.3.0"}
         lynxeyes/dotenv {:mvn/version "1.0.2"}
-        ring/ring-core {:mvn/version "1.7.1"}}
+        ring/ring-core {:mvn/version "1.7.1"}
+        ring-cors {:mvn/version "0.1.12"}}
 
  :paths ["src"]
 
  :aliases
  {:dev {:extra-paths ["dev"]
 
-        :extra-deps {cheshire {:mvn/version "5.8.1"}
-                     com.datomic/datomic-free {:mvn/version "0.9.5697"}
+        :extra-deps {com.datomic/datomic-free {:mvn/version "0.9.5697"}
                      ring/ring-devel {:mvn/version "1.7.1"}
                      vvvvalvalval/datofu {:mvn/version "0.1.0"}}
 

@@ -1,0 +1,21 @@
+{:enums
+ {:node_type
+  {:description "Node type"
+   :values [:provincia :departamento :localidad]}}
+
+ :objects
+ {:node
+  {:fields {:id {:type String}
+            :name {:type String}
+            :type {:type :node_type}
+            :custom_id {:type String}
+            :parent {:type :node}
+                     ;:resolve :query/node-by-id}
+            :ancestors {:type (list :node)}}}}
+                        ;:resolve :query/node-by-id}}}}
+
+ :queries
+ {:node_by_id {:type (non-null :node)
+               :description "Find a node by its ID"
+               :args {:id {:type (non-null String)}}
+               :resolve :query/node-by-id}}}

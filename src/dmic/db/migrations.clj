@@ -1,14 +1,21 @@
 (ns dmic.db.migrations
   (:require
     [cheshire.core :as cheshire]
-    [clojure.string :as s]
     [datofu.coll.array :as array]
+    [datofu.schema.dsl :as s]
     [datomic.client.api :as d]
-    [dmic.db.connection :refer [conn]]
-    [dmic.db.schema :as schema]))
+    [dmic.db.connection :refer [conn]]))
+
+(def node-schema
+  [(s/attr :node/name :string "Node name")
+   (s/attr :node/type :keyword "Node type")
+   (s/attr :node/id :string "Custom ID for a node")
+   (s/to-one :node/parent "Node parent")
+   (s/to-many :node/ancestors :component "Node ancestors")
+   (s/to-many :node/owners "Node ancestors")])
 
 (defn type->keyword [type]
-  (-> (name type) (s/replace " " "-") keyword))
+  (-> (name type) (clojure.string/replace " " "-") keyword))
 
 (defn make-key [names]
   (apply str (interpose "-" names)))
@@ -55,6 +62,6 @@
 
 (prn
   "Creating schema"
-  (d/transact conn {:tx-data schema/node-schema}))
+  (d/transact conn {:tx-data node-schema}))
 
 (migrate-node-by-type ["provincia" "departamento" "localidad"] {})
