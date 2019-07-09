@@ -4,14 +4,14 @@
     [compojure.core :refer [defroutes ANY]]
     [compojure.route :as route]
     [com.walmartlabs.lacinia :refer [execute]]
-    [dmic.db.schema :refer [graphql-schema]]
+    [dmic.db.graphql-schema :refer [compile-schema]]
     [dotenv :refer [env]]
     [org.httpkit.server :refer [run-server]]
     [ring.middleware.cors :refer [wrap-cors]]
     [ring.middleware.params :refer [wrap-params]]
     [ring.util.response :refer [redirect]]))
 
-(def compiled-schema (graphql-schema {}))
+(def compiled-schema (compile-schema {}))
 
 (defn- content-type [request]
   (let [header (get-in request [:headers "content-type"])
