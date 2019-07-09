@@ -7,7 +7,7 @@
         ring/ring-core {:mvn/version "1.7.1"}
         ring-cors {:mvn/version "0.1.12"}}
 
- :paths ["src"]
+ :paths ["src" "resources"]
 
  :aliases
  {:dev {:extra-paths ["dev"]

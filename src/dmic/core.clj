@@ -8,7 +8,8 @@
     [dotenv :refer [env]]
     [org.httpkit.server :refer [run-server]]
     [ring.middleware.cors :refer [wrap-cors]]
-    [ring.middleware.params :refer [wrap-params]]))
+    [ring.middleware.params :refer [wrap-params]]
+    [ring.util.response :refer [redirect]]))
 
 (def compiled-schema (graphql-schema {}))
 
@@ -26,19 +27,25 @@
 
 (def graphql-handler
   (-> (fn [request]
-        {:status 200
-         :headers {"Content-Type" "application/json"}
-         :body (let [[query vars] (extract-query request)
-                     result (execute compiled-schema query vars nil)]
-                 (cheshire/generate-string result))})
-    wrap-params
+        (let [[query vars] (extract-query request)]
+          (if-not query
+            (redirect "graphql/index.html")
+            (let [result (execute compiled-schema query vars nil)]
+              {:status 200
+               :headers {"Content-Type" "application/json"}
+               :body (cheshire/generate-string result)}))))
     (wrap-cors
       :access-control-allow-origin [#".*"]
       :access-control-allow-methods [:get :post])))
 
-(defroutes handler
+(defroutes routes
   (ANY "/graphql" [] graphql-handler)
+  (route/resources "/")
   (route/not-found "<h1>Page not found</h1>"))
+
+(def handler
+  (-> routes
+    wrap-params))
 
 (defn -main []
   (run-server handler {:port (Integer. (env :APP_PORT))}))
