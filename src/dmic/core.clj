@@ -4,7 +4,7 @@
     [compojure.core :refer [defroutes ANY]]
     [compojure.route :as route]
     [com.walmartlabs.lacinia :refer [execute]]
-    [dmic.db.graphql-schema :refer [compile-schema]]
+    [dmic.db.graphql :refer [compile-schema]]
     [dotenv :refer [env]]
     [org.httpkit.server :refer [run-server]]
     [ring.middleware.cors :refer [wrap-cors]]
